@@ -50,9 +50,7 @@
             "    });",
             "  };",
             "}",
-            "exports.createStack = wrapper('createStack');",
-            "exports.deleteStack = wrapper('deleteStack');",
-            "exports.updateStack = wrapper('updateStack');"
+            "exports.createStack = wrapper('createStack');"
           ]]}
         },
         "Description": "Lambda.CreateStack",
@@ -62,6 +60,79 @@
         "MemorySize": 128,
         "Timeout": 30
       }
+    },
+    "LambdaDeleteStack": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": {"Fn::Join" : ["\n", [
+            "var AWS = require('aws-sdk');",
+            "AWS.config.update({region: 'us-east-1'});",
+            "var cloudformation = new AWS.CloudFormation();",
+            "function wrapper(fn) {",
+            "  return function(event, context) {",
+            "    console.log(fn, '(): ', event);",
+            "    cloudformation[fn](event, function(err, data) {",
+            "      if (err) {",
+            "        context.fail(err);",
+            "      } else {",
+            "        context.succeed(data);",
+            "      }",
+            "    });",
+            "  };",
+            "}",
+            "exports.deleteStack = wrapper('deleteStack');"
+          ]]}
+        },
+        "Description": "Lambda.CreateStack",
+        "Handler": "index.deleteStack",
+        "Role": {"Fn::GetAtt": ["LambdaRole", "Arn"]},
+        "Runtime": "nodejs",
+        "MemorySize": 128,
+        "Timeout": 30
+      }
+    },
+    "LambdaUpdateStack": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "ZipFile": {"Fn::Join" : ["\n", [
+            "var AWS = require('aws-sdk');",
+            "AWS.config.update({region: 'us-east-1'});",
+            "var cloudformation = new AWS.CloudFormation();",
+            "function wrapper(fn) {",
+            "  return function(event, context) {",
+            "    console.log(fn, '(): ', event);",
+            "    cloudformation[fn](event, function(err, data) {",
+            "      if (err) {",
+            "        context.fail(err);",
+            "      } else {",
+            "        context.succeed(data);",
+            "      }",
+            "    });",
+            "  };",
+            "}",
+            "exports.updateStack = wrapper('updateStack');"
+          ]]}
+        },
+        "Description": "Lambda.CreateStack",
+        "Handler": "index.updateStack",
+        "Role": {"Fn::GetAtt": ["LambdaRole", "Arn"]},
+        "Runtime": "nodejs",
+        "MemorySize": 128,
+        "Timeout": 30
+      }
+    }
+  },
+  "Outputs": {
+    "LambdaCreateStack": {
+      "Value": {"Fn::GetAtt": ["LambdaCreateStack", "Arn"]}
+    },
+    "LambdaDeleteStack": {
+      "Value": {"Fn::GetAtt": ["LambdaDeleteStack", "Arn"]}
+    },
+    "LambdaUpdateStack": {
+      "Value": {"Fn::GetAtt": ["LambdaUpdateStack", "Arn"]}
     }
   }
 }
