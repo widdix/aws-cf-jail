@@ -55,7 +55,7 @@
         "Description": "Lambda.CreateStack",
         "Handler": "index.createStack",
         "Role": {"Fn::GetAtt": ["LambdaRole", "Arn"]},
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs4.3",
         "MemorySize": 128,
         "Timeout": 30
       }
@@ -85,7 +85,7 @@
         "Description": "Lambda.CreateStack",
         "Handler": "index.deleteStack",
         "Role": {"Fn::GetAtt": ["LambdaRole", "Arn"]},
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs4.3",
         "MemorySize": 128,
         "Timeout": 30
       }
@@ -115,7 +115,7 @@
         "Description": "Lambda.CreateStack",
         "Handler": "index.updateStack",
         "Role": {"Fn::GetAtt": ["LambdaRole", "Arn"]},
-        "Runtime": "nodejs6.10",
+        "Runtime": "nodejs4.3",
         "MemorySize": 128,
         "Timeout": 30
       }
